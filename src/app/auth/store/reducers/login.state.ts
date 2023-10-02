@@ -1,7 +1,8 @@
-import {LoginStoreInterface} from "../../interfaces/login.interface";
+import {LoginStoreResponseInterface} from "../../interfaces/login.interface";
 
-export const initialLoginState: LoginStoreInterface = {
+export const initialLoginState: LoginStoreResponseInterface = {
     requestState: 'IDLE',
     email: null,
-    token: null
+    token: null,
+    password: null
 };

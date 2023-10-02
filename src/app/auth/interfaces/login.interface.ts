@@ -11,8 +11,14 @@ export interface LoginInterface {
     password: string;
 }
 
-export interface LoginStoreInterface {
+export interface LoginStoreResponseInterface {
     requestState: RequestStateType;
+    password: string;
     token: string | null;
+    email: string | null;
+}
+
+export interface LoginStoreRequestInterface {
+    password: string;
     email: string | null;
 }

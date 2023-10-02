@@ -1,13 +1,20 @@
-import { createReducer, on } from "@ngrx/store";
-import { initialLoginState } from "./login.state";
-import { loginAuthDatas } from "../actions/login.actions";
-import { LoginStoreInterface } from "../../interfaces/login.interface";
+import {createReducer, on} from "@ngrx/store";
+import {initialLoginState} from "./login.state";
+import {loginAction, saveTokenAction} from "../actions/login.actions";
+import {LoginStoreResponseInterface} from "../../interfaces/login.interface";
 
 export const loginReducer = createReducer(
-     initialLoginState,
-     on(loginAuthDatas.saveData, (_state: LoginStoreInterface, { requestState, token, email }) => {
-          return {
-               ..._state, requestState: requestState, token: token, email: email
-          }
-     })
-)
+    initialLoginState,
+    on(loginAction, (_state: LoginStoreResponseInterface, { email, password}) => {
+        return {
+            ..._state, requestState: 'RESOLVED', password: password, email: email
+        }
+    }),
+    on(saveTokenAction, (_state: LoginStoreResponseInterface, {email, token}) => {
+        return {
+            ..._state, requestState: 'RESOLVED', email: email, token: token
+        }
+    })
+);
+
+
