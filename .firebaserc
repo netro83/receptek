@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "receptek-e22c1": {
+      "hosting": {
+        "receptek": [
+          "receptek-e22c1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "receptek-e22c1"
+  }
+}
