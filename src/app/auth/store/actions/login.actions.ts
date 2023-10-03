@@ -1,18 +1,14 @@
-import {createAction, createActionGroup, props} from '@ngrx/store';
-import {RequestStateType} from "../../../shared/types/request-state.type";
+import {createAction, props} from '@ngrx/store';
 import {LoginInterface} from "../../interfaces/login.interface";
 
 export interface PostLoginAction {
     readonly loginRequest: LoginInterface;
 }
 
-export const loginAction = createAction('User Connect Firebase', props<{ email: string, password: string }>());
-export const saveTokenAction = createAction('Save Data', props<{ requestState: RequestStateType, email: string, token: string }>());
+export const checkTokenAction = createAction('Check the storage');
 
-// export const loginAuthDatas = createActionGroup({
-//     source: 'LOGIN',
-//     events: {
-//         'User Connect Firebase': props<{ email: string, password: string }>(),
-//         'Save Data': props<{ requestState: RequestStateType, email: string, token: string }>()
-//     }
-// });
+export const loginAction = createAction('User Connect Firebase', props<{ email: string, password: string }>());
+
+export const saveTokenAction = createAction('Save Data', props<{ email: string, token: string }>());
+
+export const failedTokenAction = createAction('Failed Save Data');

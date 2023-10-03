@@ -1,61 +1,49 @@
-import { inject, Injectable, NgZone } from "@angular/core";
-import { Router } from "@angular/router";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential, getIdToken } from '@angular/fire/auth';
-import { LoginInterface } from "../interfaces/login.interface";
-import { Store } from "@ngrx/store";
-import { TokenService } from "src/app/shared/services/token/token.service";
+import {inject, Injectable, NgZone} from "@angular/core";
+import {Router} from "@angular/router";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {Auth, signInWithEmailAndPassword, UserCredential} from '@angular/fire/auth';
+import {LoginInterface} from "../interfaces/login.interface";
+import {Store} from "@ngrx/store";
 
 @Injectable({
-     providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService {
-     private auth: Auth = inject(Auth);
+    private auth: Auth = inject(Auth);
 
-     constructor(
-          private router: Router,
-          private afAuth: AngularFireAuth,
-          private ngZone: NgZone,
-          private store: Store,
-          private token: TokenService
-     ) {
+    constructor(
+        private router: Router,
+        private afAuth: AngularFireAuth,
+        private ngZone: NgZone,
+        private store: Store
+    ) {
 
-     }
+    }
 
-     ngOnInit(): void {
+    ngOnInit(): void {
 
-     }
+    }
 
-     getUserIsLogged(): boolean {
-          if (this.auth.currentUser === null) {
-               return false;
-          } else {
-               return true;
-          }
-     }
+    getUserIsLogged(): boolean {
+        return this.auth.currentUser !== null;
+    }
 
-     loginUser(props: LoginInterface): void {
-          signInWithEmailAndPassword(this.auth, props.email, props.password)
-               .then((uc: UserCredential) => {
+    loginUser(props: LoginInterface): any {
+        return new Promise((resolve, reject) => {
+            signInWithEmailAndPassword(this.auth, props.email, props.password)
+                .then((uc: UserCredential) => {
                     this.auth.currentUser.getIdToken(true).then((token) => {
-                         this.token.saveToken(token);
-                         // this.store.dispatch(loginAuthDatas.saveData({
-                         //      requestState: 'RESOLVED',
-                         //      email: props.email,
-                         //      token: token
-                         // }));
+                        resolve({token: token, email: props.email});
                     });
-               })
-               .catch((error) => {
-                    // this.store.dispatch(loginAuthDatas.saveData({
-                    //      requestState: 'REJECTED',
-                    //      email: props.email,
-                    //      token: undefined
-                    // }));
-               });
-     }
+                })
+                .catch((error) => {
+                    reject(error)
+                });
+        })
 
-     registerUser(email: string, password: string): void {
+    }
 
-     }
+    registerUser(email: string, password: string): void {
+
+    }
 }

@@ -19,10 +19,10 @@ import {FIREBASE_OPTIONS} from "@angular/fire/compat";
 import {ReactiveFormsModule} from "@angular/forms";
 import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import { AuthStoreModule } from './shared/store/auth-store.module';
-import { TokenService } from './shared/services/token/token.service';
-import { EffectsModule } from '@ngrx/effects';
-import {LoginEffect} from "./auth/store/effects/login.effect";
+import {AuthStoreModule} from './shared/store/auth-store.module';
+import {StorageService} from './shared/services/storage/storage.service';
+import {EffectsModule} from '@ngrx/effects';
+import {Storage} from "@angular/fire/storage";
 
 @NgModule({
     declarations: [
@@ -37,7 +37,7 @@ import {LoginEffect} from "./auth/store/effects/login.effect";
         AppRoutingModule,
         AngularFireDatabaseModule,
         StoreModule.forRoot({}, {}),
-        EffectsModule.forRoot([LoginEffect]),
+        EffectsModule.forRoot([]),
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAuth(() => getAuth()),
         provideDatabase(() => getDatabase()),
@@ -50,7 +50,7 @@ import {LoginEffect} from "./auth/store/effects/login.effect";
     providers: [
         RecipeListGuard,
         AuthService,
-        TokenService,
+        StorageService,
         {provide: FIREBASE_OPTIONS, useValue: environment.firebase}
     ],
     bootstrap: [AppComponent]

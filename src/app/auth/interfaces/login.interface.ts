@@ -18,6 +18,11 @@ export interface LoginStoreResponseInterface {
     email: string | null;
 }
 
+export interface LoginStoreFirebaseInterface {
+    token: string | null;
+    email: string | null;
+}
+
 export interface LoginStoreRequestInterface {
     password: string;
     email: string | null;

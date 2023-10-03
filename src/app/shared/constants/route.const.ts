@@ -1,4 +1,5 @@
 export const AUTH = 'auth';
+export const RECIPES = 'recipes';
 
 export const AUTH_LOGIN = 'login';
 export const AUTH_REG = 'reg';

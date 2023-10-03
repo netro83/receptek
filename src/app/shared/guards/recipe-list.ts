@@ -1,37 +1,44 @@
-import { Injectable } from "@angular/core";
-import { CanActivate, CanLoad, Router } from "@angular/router";
-import { Store, props } from "@ngrx/store";
-import { AuthService } from "src/app/auth/services/auth.services";
+import {Injectable} from "@angular/core";
+import {CanActivate, Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import {AuthService} from "src/app/auth/services/auth.services";
+import {checkTokenAction} from "../../auth/store/actions/login.actions";
 
 @Injectable()
 export class RecipeListGuard implements CanActivate {
-     constructor(
-          private router: Router,
-          private auth: AuthService,
-          private store: Store
-     ) {
-     }
+    constructor(
+        private router: Router,
+        private auth: AuthService,
+        private store: Store
+    ) {
+    }
 
-     canActivate(): boolean {
-          const res = this.auth.getUserIsLogged();
-/*
-          this.store.select(loginSelectorUser).subscribe((e: LoginStoreInterface) => {
-               console.log(e.requestState);
-          }); */
+    canActivate(): boolean {
+        // const res = this.auth.getUserIsLogged();
 
-          console.log(res);
-          if (!res) {
-               this.router.navigateByUrl('/auth');
-          }
+        this.store.dispatch(
+            checkTokenAction()
+        );
 
-          return res;
-     }
+        // console.log(res);
+        // /*
+        //           this.store.select(loginSelectorUser).subscribe((e: LoginStoreInterface) => {
+        //                console.log(e.requestState);
+        //           }); */
+        //
+        // console.log(res);
+        // if (!res) {
+        //     this.router.navigateByUrl('/auth');
+        // }
+        //
+        return false;
+    }
 
-     getUserDataFromFirebase(): void {
+    getUserDataFromFirebase(): void {
 
-     }
+    }
 
-     // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-     //     return undefined;
-     // }
+    // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    //     return undefined;
+    // }
 }

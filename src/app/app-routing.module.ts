@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AUTH, RECIPE_LIST, RECIPE_READ} from "./shared/constants/route.const";
+import {AUTH, RECIPE_LIST, RECIPE_READ, RECIPES} from "./shared/constants/route.const";
 import {RecipeListGuard} from "./shared/guards/recipe-list";
 
 const routes: Routes = [
@@ -9,7 +9,7 @@ const routes: Routes = [
         loadChildren: () => import ('./auth/auth.module').then(m => m.AuthModule)
     },
     {
-        path: 'recipes',
+        path: RECIPES,
         canActivate: [RecipeListGuard],
         children: [
             {
