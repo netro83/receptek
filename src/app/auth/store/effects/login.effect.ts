@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {checkTokenAction, failedTokenAction, loginAction, saveTokenAction} from "../actions/login.actions";
+import {failedTokenAction, loginAction, saveTokenAction} from "../actions/login.actions";
 import {AuthService} from "../../services/auth.services";
 import {catchError, map, of, repeat, switchMap, tap} from "rxjs";
 import {LoginInterface, LoginStoreFirebaseInterface} from "../../interfaces/login.interface";
@@ -35,26 +35,14 @@ export class LoginEffect {
             repeat()
         ));
 
-    checkTokenAction$ = createEffect(() => {
-        this.actions$.pipe(
-            ofType(checkTokenAction),
-            switchMap(async () => {
-                this.storage.getFromStorage('token');
-            }),
-            map((resp) => {
-                return saveTokenAction({
-                    email: this.storage.getFromStorage('email'),
-                    token: this.storage.getFromStorage('token')
-                });
-            }),
-            tap(() => {
-                this.router.navigateByUrl(`${RECIPES}/${RECIPE_LIST}`);
-            }),
-            catchError(() => {
-                return of(failedTokenAction);
-            })
-        );
-    });
+    // saveTokenAction$ = createEffect(() =>
+    //     this.actions$.pipe(
+    //         ofType(saveTokenAction),
+    //         tap(() => {
+    //             this.router.navigateByUrl(`${RECIPES}/${RECIPE_LIST}`)
+    //         })
+    //     ), {dispatch: false}
+    // )
 
     constructor(
         private router: Router,

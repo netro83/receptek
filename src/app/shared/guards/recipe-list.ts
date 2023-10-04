@@ -2,43 +2,35 @@ import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {AuthService} from "src/app/auth/services/auth.services";
-import {checkTokenAction} from "../../auth/store/actions/login.actions";
+import {failedTokenAction, saveTokenAction} from "../../auth/store/actions/login.actions";
+import {StorageService} from "../services/storage/storage.service";
+import {AUTH, AUTH_LOGIN} from "../constants/route.const";
 
 @Injectable()
 export class RecipeListGuard implements CanActivate {
     constructor(
         private router: Router,
         private auth: AuthService,
-        private store: Store
+        private store: Store,
+        private storage: StorageService
     ) {
     }
 
     canActivate(): boolean {
-        // const res = this.auth.getUserIsLogged();
-
-        this.store.dispatch(
-            checkTokenAction()
-        );
-
-        // console.log(res);
-        // /*
-        //           this.store.select(loginSelectorUser).subscribe((e: LoginStoreInterface) => {
-        //                console.log(e.requestState);
-        //           }); */
-        //
-        // console.log(res);
-        // if (!res) {
-        //     this.router.navigateByUrl('/auth');
-        // }
-        //
-        return false;
+        if (this.storage.getFromStorage('token') !== null) {
+            this.store.dispatch(
+                saveTokenAction({
+                    email: this.storage.getFromStorage('email'),
+                    token: this.storage.getFromStorage('token')
+                })
+            );
+            return true;
+        } else {
+            this.store.dispatch(
+                failedTokenAction()
+            );
+            this.router.navigateByUrl(`${AUTH}/${AUTH_LOGIN}`);
+            return false;
+        }
     }
-
-    getUserDataFromFirebase(): void {
-
-    }
-
-    // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    //     return undefined;
-    // }
 }

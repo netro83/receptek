@@ -1,9 +1,5 @@
 import {createAction, props} from '@ngrx/store';
-import {LoginInterface} from "../../interfaces/login.interface";
 
-export interface PostLoginAction {
-    readonly loginRequest: LoginInterface;
-}
 
 export const checkTokenAction = createAction('Check the storage');
 

@@ -1,9 +1,10 @@
 import {inject, Injectable, NgZone} from "@angular/core";
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {Auth, signInWithEmailAndPassword, UserCredential} from '@angular/fire/auth';
+import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential} from '@angular/fire/auth';
 import {LoginInterface} from "../interfaces/login.interface";
 import {Store} from "@ngrx/store";
+import {RegInterface} from "../interfaces/reg.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -28,7 +29,7 @@ export class AuthService {
         return this.auth.currentUser !== null;
     }
 
-    loginUser(props: LoginInterface): any {
+    loginUser(props: LoginInterface): Promise<any> {
         return new Promise((resolve, reject) => {
             signInWithEmailAndPassword(this.auth, props.email, props.password)
                 .then((uc: UserCredential) => {
@@ -43,7 +44,15 @@ export class AuthService {
 
     }
 
-    registerUser(email: string, password: string): void {
+    registerUser(props: RegInterface): Promise<any> {
+        return new Promise((resolve, reject) => {
+            createUserWithEmailAndPassword(this.auth, props.email, props.password)
+                .then((uc: UserCredential) => {
 
+                })
+                .catch((error) => {
+
+                })
+        });
     }
 }
