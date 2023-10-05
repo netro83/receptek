@@ -4,6 +4,7 @@ import {FormGroup, NonNullableFormBuilder} from "@angular/forms";
 import {LoginFormInterface} from "../../interfaces/login.interface";
 import {Store} from "@ngrx/store";
 import {loginAction} from "../../store/actions/login.actions";
+import {AUTH_LOGIN, AUTH_REG, AUTH} from "../../../shared/constants/route.const";
 
 @Component({
     selector: 'app-login',
@@ -11,6 +12,8 @@ import {loginAction} from "../../store/actions/login.actions";
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+    public regLink = `/${AUTH}/${AUTH_REG}`;
 
     login: FormGroup<LoginFormInterface> = this.formBuilder.group({
         email: ['hj@wpo.hu'],
@@ -29,10 +32,6 @@ export class LoginComponent implements OnInit {
     }
 
     loginUser(): void {
-        // this.authService.loginUser({
-        //     email: this.login.value.email,
-        //     password: this.login.value.password
-        // });
         const {email, password} = this.login.getRawValue();
 
         this.store.dispatch(

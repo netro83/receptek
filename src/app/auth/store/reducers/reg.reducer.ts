@@ -5,9 +5,9 @@ import {RegReducerInterface} from "../../interfaces/reg.interface";
 
 export const regReducer = createReducer(
     initialRegState,
-    on(regUser, (_state: RegReducerInterface, {email, password}) => {
+    on(regUser, (_state: RegReducerInterface, {email}) => {
         return {
-            ..._state, requestState: 'PENDING', email: email, password: password
+            ..._state, requestState: 'PENDING', email: email
         }
     }),
     on(regUserIsSuccess, (_state: RegReducerInterface, {}) => {

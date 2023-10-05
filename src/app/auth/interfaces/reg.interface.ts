@@ -12,5 +12,8 @@ export interface RegInterface {
 export interface RegReducerInterface {
     requestState: RequestStateType,
     email: string;
-    password: string;
+}
+export interface RegStoreFirebaseInterface {
+    token: string | null;
+    email: string | null;
 }

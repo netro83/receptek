@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {AuthService} from "src/app/auth/services/auth.services";
-import {failedTokenAction, saveTokenAction} from "../../auth/store/actions/login.actions";
+import {failedTokenAction, refreshTokenAction, saveTokenAction} from "../../auth/store/actions/login.actions";
 import {StorageService} from "../services/storage/storage.service";
 import {AUTH, AUTH_LOGIN} from "../constants/route.const";
 
@@ -19,10 +19,7 @@ export class RecipeListGuard implements CanActivate {
     canActivate(): boolean {
         if (this.storage.getFromStorage('token') !== null) {
             this.store.dispatch(
-                saveTokenAction({
-                    email: this.storage.getFromStorage('email'),
-                    token: this.storage.getFromStorage('token')
-                })
+                refreshTokenAction()
             );
             return true;
         } else {

@@ -1,13 +1,19 @@
 import {createReducer, on} from "@ngrx/store";
 import {initialLoginState} from "./login.state";
-import {checkTokenAction, failedTokenAction, loginAction, saveTokenAction} from "../actions/login.actions";
+import {
+    checkTokenAction,
+    failedTokenAction,
+    loginAction,
+    refreshTokenAction,
+    saveTokenAction
+} from "../actions/login.actions";
 import {LoginStoreResponseInterface} from "../../interfaces/login.interface";
 
 export const loginReducer = createReducer(
     initialLoginState,
-    on(loginAction, (_state: LoginStoreResponseInterface, {email, password}) => {
+    on(loginAction, (_state: LoginStoreResponseInterface, {email}) => {
         return {
-            ..._state, requestState: 'PENDING', email: email, password: password
+            ..._state, requestState: 'PENDING', email: email
         }
     }),
     on(saveTokenAction, (_state: LoginStoreResponseInterface, {email, token}) => {
@@ -21,6 +27,11 @@ export const loginReducer = createReducer(
         }
     }),
     on(checkTokenAction, (_state: LoginStoreResponseInterface, {}) => {
+        return {
+            ..._state, requestState: 'PENDING'
+        }
+    }),
+    on(refreshTokenAction, (_state) => {
         return {
             ..._state, requestState: 'PENDING'
         }

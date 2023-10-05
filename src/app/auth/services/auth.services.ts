@@ -1,7 +1,13 @@
 import {inject, Injectable, NgZone} from "@angular/core";
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential} from '@angular/fire/auth';
+import {
+    Auth,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    UserCredential
+} from '@angular/fire/auth';
 import {LoginInterface} from "../interfaces/login.interface";
 import {Store} from "@ngrx/store";
 import {RegInterface} from "../interfaces/reg.interface";
@@ -29,6 +35,20 @@ export class AuthService {
         return this.auth.currentUser !== null;
     }
 
+    refreshUser(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            onAuthStateChanged(
+                this.auth,
+                (uc: any) => {
+                    console.log(uc);
+                    resolve({token: uc.accessToken, email: uc.email});
+                }),
+                (error) => {
+
+                }
+        });
+    }
+
     loginUser(props: LoginInterface): Promise<any> {
         return new Promise((resolve, reject) => {
             signInWithEmailAndPassword(this.auth, props.email, props.password)
@@ -40,18 +60,20 @@ export class AuthService {
                 .catch((error) => {
                     reject(error)
                 });
-        })
-
+        });
     }
 
     registerUser(props: RegInterface): Promise<any> {
         return new Promise((resolve, reject) => {
             createUserWithEmailAndPassword(this.auth, props.email, props.password)
                 .then((uc: UserCredential) => {
-
+                    this.auth.currentUser.getIdToken(true).then((token) => {
+                        resolve({token: token, email: props.email});
+                    });
                 })
                 .catch((error) => {
-
+                    // console.log(error);
+                    reject(new Error(error))
                 })
         });
     }

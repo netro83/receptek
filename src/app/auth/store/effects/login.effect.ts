@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {failedTokenAction, loginAction, saveTokenAction} from "../actions/login.actions";
+import {failedTokenAction, loginAction, refreshTokenAction, saveTokenAction} from "../actions/login.actions";
 import {AuthService} from "../../services/auth.services";
 import {catchError, map, of, repeat, switchMap, tap} from "rxjs";
 import {LoginInterface, LoginStoreFirebaseInterface} from "../../interfaces/login.interface";
@@ -34,6 +34,22 @@ export class LoginEffect {
             }),
             repeat()
         ));
+
+    refreshTokenAction$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(refreshTokenAction),
+            switchMap(async () =>
+                this.auth.refreshUser()
+            ),
+            map((resp: any) => {
+                return saveTokenAction({email: resp.email, token: resp.token})
+                }
+            ),
+            catchError(() => {
+                return of(failedTokenAction())
+            })
+        )
+    )
 
     // saveTokenAction$ = createEffect(() =>
     //     this.actions$.pipe(

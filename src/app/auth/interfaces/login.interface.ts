@@ -13,7 +13,6 @@ export interface LoginInterface {
 
 export interface LoginStoreResponseInterface {
     requestState: RequestStateType;
-    password: string;
     token: string | null;
     email: string | null;
 }
@@ -23,7 +22,3 @@ export interface LoginStoreFirebaseInterface {
     email: string | null;
 }
 
-export interface LoginStoreRequestInterface {
-    password: string;
-    email: string | null;
-}
