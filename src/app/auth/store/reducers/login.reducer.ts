@@ -11,14 +11,14 @@ import {LoginStoreResponseInterface} from "../../interfaces/login.interface";
 
 export const loginReducer = createReducer(
     initialLoginState,
-    on(loginAction, (_state: LoginStoreResponseInterface, {email}) => {
+    on(loginAction, checkTokenAction, refreshTokenAction, (_state: LoginStoreResponseInterface, {}) => {
         return {
-            ..._state, requestState: 'PENDING', email: email
+            ..._state, requestState: 'PENDING'
         }
     }),
-    on(saveTokenAction, (_state: LoginStoreResponseInterface, {email, token}) => {
+    on(saveTokenAction, (_state: LoginStoreResponseInterface, {email, token, userId}) => {
         return {
-            ..._state, requestState: 'RESOLVED', email: email, token: token
+            ..._state, requestState: 'RESOLVED', email: email, token: token, userId: userId
         }
     }),
     on(failedTokenAction, (_state: LoginStoreResponseInterface, {}) => {
@@ -26,16 +26,6 @@ export const loginReducer = createReducer(
             ..._state, requestState: 'REJECTED'
         }
     }),
-    on(checkTokenAction, (_state: LoginStoreResponseInterface, {}) => {
-        return {
-            ..._state, requestState: 'PENDING'
-        }
-    }),
-    on(refreshTokenAction, (_state) => {
-        return {
-            ..._state, requestState: 'PENDING'
-        }
-    })
 );
 
 

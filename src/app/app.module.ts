@@ -22,15 +22,11 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {AuthStoreModule} from './shared/store/auth-store.module';
 import {StorageService} from './shared/services/storage/storage.service';
 import {EffectsModule} from '@ngrx/effects';
-import {Storage} from "@angular/fire/storage";
+import {FirebaseRecipeService} from "./shared/services/recipe/recipe.service";
 
 @NgModule({
     declarations: [
-        AppComponent,
-        LoginComponent,
-        RegComponent,
-        LostpwComponent,
-        RecipeReadComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
@@ -51,6 +47,7 @@ import {Storage} from "@angular/fire/storage";
         RecipeListGuard,
         AuthService,
         StorageService,
+        FirebaseRecipeService,
         {provide: FIREBASE_OPTIONS, useValue: environment.firebase}
     ],
     bootstrap: [AppComponent]

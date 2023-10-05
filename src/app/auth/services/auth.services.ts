@@ -40,8 +40,7 @@ export class AuthService {
             onAuthStateChanged(
                 this.auth,
                 (uc: any) => {
-                    console.log(uc);
-                    resolve({token: uc.accessToken, email: uc.email});
+                    resolve({token: uc.accessToken, email: uc.email, userId: uc.uid});
                 }),
                 (error) => {
 
@@ -54,7 +53,7 @@ export class AuthService {
             signInWithEmailAndPassword(this.auth, props.email, props.password)
                 .then((uc: UserCredential) => {
                     this.auth.currentUser.getIdToken(true).then((token) => {
-                        resolve({token: token, email: props.email});
+                        resolve({token: token, email: props.email, userId: uc.user.uid});
                     });
                 })
                 .catch((error) => {

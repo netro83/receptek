@@ -1,0 +1,18 @@
+<h2>RECIPE ADD</h2>
+<form [formGroup]="recipeAddForm" (ngSubmit)="recipeAdd()">
+    <div>
+        <label>Title</label>
+        <input type="text" formControlName="title"/>
+    </div>
+    <div>
+        <label>Link/URL</label>
+        <input type="text" formControlName="url"/>
+    </div>
+    <div>
+        <label>Image upload</label>
+        <input type="file" formControlName="image"/>
+    </div>
+    <div>
+        <button type="submit">RECIPE ADD</button>
+    </div>
+</form>

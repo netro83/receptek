@@ -13,12 +13,20 @@ export interface LoginInterface {
 
 export interface LoginStoreResponseInterface {
     requestState: RequestStateType;
-    token: string | null;
-    email: string | null;
+    token: string | undefined;
+    email: string | undefined;
+    userId: string | undefined;
 }
 
 export interface LoginStoreFirebaseInterface {
-    token: string | null;
-    email: string | null;
+    token: string | undefined;
+    email: string | undefined;
+    userId: string | undefined;
 }
 
+export interface LoginStoreSelectorInterface {
+    requestState: string;
+    token: string;
+    email: string;
+    userId: string;
+}

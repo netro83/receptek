@@ -23,7 +23,8 @@ export class LoginEffect {
             map((resp: LoginStoreFirebaseInterface) => {
                     this.storage.saveToStorage('token', resp.token);
                     this.storage.saveToStorage('email', resp.email);
-                    return saveTokenAction({email: resp.email, token: resp.token})
+                    this.storage.saveToStorage('userId', resp.userId);
+                    return saveTokenAction({email: resp.email, token: resp.token, userId: resp.userId})
                 }
             ),
             tap(() => {
@@ -42,7 +43,8 @@ export class LoginEffect {
                 this.auth.refreshUser()
             ),
             map((resp: any) => {
-                return saveTokenAction({email: resp.email, token: resp.token})
+                console.log(resp)
+                return saveTokenAction({email: resp.email, token: resp.token, userId: resp.userId})
                 }
             ),
             catchError(() => {
@@ -50,15 +52,6 @@ export class LoginEffect {
             })
         )
     )
-
-    // saveTokenAction$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(saveTokenAction),
-    //         tap(() => {
-    //             this.router.navigateByUrl(`${RECIPES}/${RECIPE_LIST}`)
-    //         })
-    //     ), {dispatch: false}
-    // )
 
     constructor(
         private router: Router,
