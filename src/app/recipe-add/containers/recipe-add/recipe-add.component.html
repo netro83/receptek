@@ -10,9 +10,11 @@
     </div>
     <div>
         <label>Image upload</label>
-        <input type="file" formControlName="image"/>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)"/>
     </div>
     <div>
-        <button type="submit">RECIPE ADD</button>
+        <button
+                [disabled]="recipeUploadIsProgress"
+                type="submit">RECIPE ADD</button>
     </div>
 </form>

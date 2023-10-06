@@ -12,9 +12,10 @@ export class RecipeAddComponent implements OnInit {
 
     recipeAddForm: FormGroup<RecipeAddInterface> = this.formBuilder.group({
         title: [''],
-        url: [''],
-        image: ['']
+        url: ['']
     });
+    recipeAddImage = undefined;
+    recipeUploadIsProgress = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -25,12 +26,20 @@ export class RecipeAddComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    onFileSelected(event: any): void {
+        console.log(event);
+        this.recipeAddImage = event.target.files[0];
+    }
+
     recipeAdd(): void {
+        this.recipeUploadIsProgress = true;
         const {title, url} = this.recipeAddForm.getRawValue();
         this.firebaseRecipeService.firebaseRecipeSave(
-            {title: title, url: url, image: 'undefined'},
-            '12'
-        )
+            {title: title, url: url, image: this.recipeAddImage}
+        ).then((e) => {
+            console.log('UP ', e);
+            this.recipeUploadIsProgress = false;
+        })
     }
 
 }
