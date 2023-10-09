@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {FirebaseRecipeService} from "../../../shared/services/recipe/recipe.service";
+import {Store} from "@ngrx/store";
+import {getRecipeListAction} from "../../store/actions/recipe-list.action";
+import {recipeListSelector} from "../../store/selectors/recipe-list.selector";
 
 @Component({
     selector: 'app-recipe-list',
@@ -7,16 +11,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class RecipeListComponent implements OnInit {
 
-    input1: string = '';
+    public recipeArray$ =  this.store.select(recipeListSelector);
 
-
-    constructor() {
+    constructor(
+        private firebaseRecipeService: FirebaseRecipeService,
+        private store: Store
+    ) {
     }
 
     ngOnInit(): void {
-    }
-
-    async firebaseSave(): Promise<any> {
+        this.store.dispatch(getRecipeListAction());
 
     }
 

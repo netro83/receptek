@@ -2,7 +2,7 @@ import {createFeatureSelector, createSelector} from "@ngrx/store";
 import {LoginStoreSelectorInterface} from "../../interfaces/login.interface";
 
 export const loginSelector = createFeatureSelector('login');
-export const loginSelectorUser = createSelector(loginSelector, (props: LoginStoreSelectorInterface) => {
+export const loginUserSelector = createSelector(loginSelector, (props: LoginStoreSelectorInterface) => {
     return {
         requestState: props.requestState,
         token: props.token,

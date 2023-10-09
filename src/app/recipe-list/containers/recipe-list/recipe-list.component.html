@@ -1,3 +1,7 @@
-<button [routerLink]="'/recipe/add'">
-    ADD RECIPE
+<div *ngFor="let item of (recipeArray$ | async).recipes">
+    {{item.title}}
+</div>
+<button [routerLink]="'/recipes/add'">
+    GO TO ADD RECIPE
 </button>
+
