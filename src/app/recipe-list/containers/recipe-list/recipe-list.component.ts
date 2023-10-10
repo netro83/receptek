@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FirebaseRecipeService} from "../../../shared/services/recipe/recipe.service";
 import {Store} from "@ngrx/store";
 import {getRecipeListAction} from "../../store/actions/recipe-list.action";
@@ -6,6 +6,7 @@ import {recipeListSelector} from "../../store/selectors/recipe-list.selector";
 
 @Component({
     selector: 'app-recipe-list',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './recipe-list.component.html',
     styleUrls: ['./recipe-list.component.scss']
 })
@@ -21,7 +22,6 @@ export class RecipeListComponent implements OnInit {
 
     ngOnInit(): void {
         this.store.dispatch(getRecipeListAction());
-
     }
 
 }

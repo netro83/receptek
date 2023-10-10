@@ -31,10 +31,13 @@ export class FirebaseRecipeService {
 
     }
 
-     firebaseRecipeRead(): Promise<any> {
+    firebaseRecipeRead(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.firebaseStore.collection('recipes').valueChanges().subscribe((e) => {
-                resolve(e);
+            this.store.select(loginUserSelector).subscribe(async (e: LoginStoreSelectorInterface) => {
+                if (e.requestState === 'RESOLVED')
+                    this.firebaseStore.collection('recipes', ref => ref.where('user', '==', e.userId)).valueChanges().subscribe((e) => {
+                        resolve(e);
+                    });
             });
         });
     }
