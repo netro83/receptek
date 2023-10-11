@@ -1,5 +1,8 @@
 <div *ngFor="let item of (recipeArray$ | async).recipes">
     {{item.title}}
+    <button
+            (click)="navigateToReadPage(item.id)">READ
+    </button>
 </div>
 <button [routerLink]="'/recipes/add'">
     GO TO ADD RECIPE

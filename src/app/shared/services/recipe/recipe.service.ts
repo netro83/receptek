@@ -11,8 +11,8 @@ import {loginUserSelector} from "../../../auth/store/selectors/login.selector";
 import {LoginStoreSelectorInterface} from "../../../auth/interfaces/login.interface";
 import {Constants} from "../../configs/config";
 import {UploadTaskSnapshot} from "@angular/fire/compat/storage/interfaces";
-import {StorageService} from "../storage/storage.service";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
+import {slugifyConst} from "../../constants/slugify.const";
 
 @Injectable()
 export class FirebaseRecipeService {
@@ -25,8 +25,7 @@ export class FirebaseRecipeService {
         private store: Store,
         private firebaseStorage: AngularFireStorage,
         private firebaseDatabase: AngularFireDatabase,
-        private firebaseStore: AngularFirestore,
-        private storage: StorageService
+        private firebaseStore: AngularFirestore
     ) {
 
     }
@@ -47,6 +46,7 @@ export class FirebaseRecipeService {
             try {
                 if (data.image !== undefined) {
                     const task = this.firebaseStorage.upload(Constants.FILE_PATH_NAME, data.image);
+
                     task.snapshotChanges().subscribe((snapshot: UploadTaskSnapshot | undefined) => {
                         if (snapshot.state === 'success') {
                             snapshot.ref.getDownloadURL().then((url: string) => {
@@ -71,8 +71,15 @@ export class FirebaseRecipeService {
     uploadFile(data: RecipeDataInterface, image: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.store.select(loginUserSelector).subscribe(async (e: LoginStoreSelectorInterface) => {
-                await addDoc(collection(this.db, "recipes"), {...data, user: e.userId, image: image})
-                    .then(() => {
+                await addDoc(collection(this.db, "recipes"),
+                    {
+                        ...data,
+                        user: e.userId,
+                        image: image,
+                        id: `${e.userId}-${slugifyConst(data.title)}-${Date.now()}`
+                    })
+                    .then((w) => {
+                        console.log(w);
                         resolve(true);
                     })
                     .catch((error) => {

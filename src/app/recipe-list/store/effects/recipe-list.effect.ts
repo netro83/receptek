@@ -20,7 +20,8 @@ export class RecipeListEffect {
                 return this.firebaseRecipeService.firebaseRecipeRead()
             }),
             map((recipes: RecipeListInterface) => {
-                return getRecipeListSuccessAction({recipes: recipes});
+                console.log(recipes);
+                return getRecipeListSuccessAction(recipes);
             }),
             catchError(() => {
                 return of(getRecipeListFailedAction());

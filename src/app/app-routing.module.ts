@@ -17,12 +17,18 @@ const routes: Routes = [
                 loadChildren: () => import ('./recipe-list/recipe-list.module').then(m => m.RecipeListModule)
             },
             {
-                path: RECIPE_READ,
-                loadChildren: () => import ('./recipe-read/recipe-read.module').then(m => m.RecipeReadModule)
-            },
-            {
                 path: RECIPE_ADD,
                 loadChildren: () => import ('./recipe-add/recipe-add.module').then(m => m.RecipeAddModule)
+            }
+        ]
+    },
+    {
+        path: RECIPES,
+        canActivate: [RecipeListGuard],
+        children: [
+            {
+                path: `${RECIPE_READ}/:id`,
+                loadChildren: () => import ('./recipe-read/recipe-read.module').then(m => m.RecipeReadModule)
             }
         ]
     },

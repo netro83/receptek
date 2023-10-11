@@ -3,10 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoginComponent} from './auth/containers/login/login.component';
-import {RegComponent} from './auth/containers/reg/reg.component';
-import {LostpwComponent} from './auth/containers/lostpw/lostpw.component';
-import {RecipeReadComponent} from './recipe-read/containers/recipe-read/recipe-read.component';
+
 import {RecipeListGuard} from "./shared/guards/recipe-list";
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {environment} from '../environments/environment';

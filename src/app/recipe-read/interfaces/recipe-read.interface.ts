@@ -1,13 +1,13 @@
 import {RequestStateType} from "../../shared/types/request-state.type";
 
-export interface RecipeListInterface {
-    recipes: RecipeListItem[];
+export interface RecipeReadInterface {
+    recipes: RecipeReadItem[];
 }
-export interface RecipeListInitialInterface {
+export interface RecipeReadInitialInterface {
     requestState: RequestStateType;
-    recipes: RecipeListItem[];
+    recipes: any;
 }
-export interface RecipeListItem {
+export interface RecipeReadItem {
     image: any;
     title: string;
     url: string;

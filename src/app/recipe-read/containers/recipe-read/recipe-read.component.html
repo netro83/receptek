@@ -1,1 +1,12 @@
-<p>recipe-read works!</p>
+<div
+        *ngFor="let item of (recipe$ | async)">
+    <h2>{{item.title}}</h2>
+    <a
+            target="_blank"
+            [href]="item.url">Weboldala</a>
+    <div
+            *ngIf="item.image !== 'undefined'"
+            class="image-holder">
+        <img [src]="item.image"/>
+    </div>
+</div>

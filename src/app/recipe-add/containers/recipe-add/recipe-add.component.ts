@@ -27,7 +27,6 @@ export class RecipeAddComponent implements OnInit {
     }
 
     onFileSelected(event: any): void {
-        console.log(event);
         this.recipeAddImage = event.target.files[0];
     }
 
@@ -35,9 +34,8 @@ export class RecipeAddComponent implements OnInit {
         this.recipeUploadIsProgress = true;
         const {title, url} = this.recipeAddForm.getRawValue();
         this.firebaseRecipeService.firebaseRecipeSave(
-            {title: title, url: url, image: this.recipeAddImage}
+            {title: title, url: url, image: this.recipeAddImage }
         ).then((e) => {
-            console.log('UP ', e);
             this.recipeUploadIsProgress = false;
         })
     }
