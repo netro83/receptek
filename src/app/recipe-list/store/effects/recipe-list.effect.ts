@@ -19,9 +19,9 @@ export class RecipeListEffect {
             switchMap(async () => {
                 return this.firebaseRecipeService.firebaseRecipeRead()
             }),
-            map((recipes: RecipeListInterface) => {
+            map((recipes: any) => {
                 console.log(recipes);
-                return getRecipeListSuccessAction(recipes);
+                return getRecipeListSuccessAction({recipes: recipes});
             }),
             catchError(() => {
                 return of(getRecipeListFailedAction());

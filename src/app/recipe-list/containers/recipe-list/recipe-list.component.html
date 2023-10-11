@@ -1,10 +1,25 @@
-<div *ngFor="let item of (recipeArray$ | async).recipes">
-    {{item.title}}
+<div class="container">
+    <h2>Receptek</h2>
+    <div class="row list-group" *ngFor="let item of (recipeArray$ | async).recipes">
+        <div class="col-12 col-lg-7 m-auto mb-2 list-group-item">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-7">
+                    <p class="mb-0">{{item.title}}</p>
+                </div>
+                <div class="col-5 text-end">
+                    <button class="btn btn-primary"
+                            (click)="navigateToReadPage(item.id)">READ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="mt-5">Recept hozzáadása</h3>
     <button
-            (click)="navigateToReadPage(item.id)">READ
+            class="btn btn-success"
+            [routerLink]="'/recipes/add'">
+        GO TO ADD RECIPE
     </button>
 </div>
-<button [routerLink]="'/recipes/add'">
-    GO TO ADD RECIPE
-</button>
+
 

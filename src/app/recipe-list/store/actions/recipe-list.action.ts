@@ -4,5 +4,5 @@ import { RecipeListInterface} from "../../interfaces/recipe-list.interface";
 const recipeListId = '[RECIPES]';
 
 export const getRecipeListAction = createAction(`${recipeListId} Get recipes`);
-export const getRecipeListSuccessAction = createAction(`${recipeListId} Recipes Success`, props<RecipeListInterface>());
+export const getRecipeListSuccessAction = createAction(`${recipeListId} Recipes Success`, props<{recipes: []}>());
 export const getRecipeListFailedAction = createAction(`${recipeListId} Recipes Failed`);

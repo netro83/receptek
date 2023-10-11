@@ -1,16 +1,18 @@
 import {RequestStateType} from "../../shared/types/request-state.type";
 
 export interface RecipeListInterface {
-    recipes: RecipeListItem[];
+    recipes: Array<RecipeListItemInterface>;
 }
 export interface RecipeListInitialInterface {
     requestState: RequestStateType;
-    recipes: RecipeListItem[];
+    recipes: RecipeListItemInterface[];
 }
-export interface RecipeListItem {
+export interface RecipeListItemInterface {
     image: any;
     title: string;
     url: string;
     user: string;
     id: string;
 }
+
+
